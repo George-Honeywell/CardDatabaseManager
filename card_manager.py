@@ -1,6 +1,4 @@
 from tkinter import Tk, ttk, messagebox
-import json
-from pathlib import Path
 
 window = Tk()
 window.title("PRIMEVAL: Battles - Card Manager")
