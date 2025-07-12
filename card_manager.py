@@ -86,8 +86,6 @@ button_update_card_viewer = ttk.Button(tabTwo, text="Reload Database", command=r
 card_viewer = ttk.Treeview(tabTwo)
 card_viewer["columns"] = ("1","2","3","4","5","6","7","8","9")
 
-#card_viewer.column("1", width=15, anchor='center')
-
 card_viewer.heading("1", text="Card ID")
 card_viewer.heading("2", text="Mana")
 card_viewer.heading("3", text="Title")
