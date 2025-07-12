@@ -41,9 +41,9 @@ def add_card():
     card_id += 1
 
 def refresh_card_viewer():
+    card_viewer.delete(*card_viewer.get_children())
     for row in conn.execute('SELECT * FROM card_db'):
-        card_viewer.insert("", 'end', values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
-            
+        card_viewer.insert("", 'end', values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))            
 
 # Card Labels
 label_card_mana = ttk.Label(tabOne, text="Mana:").grid(row=0, column=0)
