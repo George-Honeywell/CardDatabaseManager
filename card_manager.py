@@ -2,6 +2,8 @@ from tkinter import Tk, ttk, messagebox
 
 window = Tk()
 window.title("PRIMEVAL: Battles - Card Manager")
+window.minsize("400","400")
+window.maxsize("400","400")
 
 # Card Labels
 label_card_mana = ttk.Label(window, text="Mana:").grid(row=0, column=0)
