@@ -14,8 +14,16 @@ conn.execute('CREATE TABLE IF NOT EXISTS card_db (_id INT NOT NULL, ' \
 
 window = Tk()
 window.title("PRIMEVAL: Battles - Card Manager")
-window.minsize("400","400")
-window.maxsize("400","400")
+window.minsize("1200","400")
+window.maxsize("1200","400")
+
+tabControl = ttk.Notebook(window)
+tabOne = ttk.Frame(tabControl)
+tabTwo = ttk.Frame(tabControl)
+
+tabControl.add(tabOne, text="Enter 'Creature' Card")
+tabControl.add(tabTwo, text="Card Viewer")
+tabControl.pack(expand=1, fill="both")
 
 card_id = 0
 def add_card():
@@ -32,41 +40,63 @@ def add_card():
                   entry_card_health.get()])
     card_id += 1
 
+def refresh_card_viewer():
+    for row in conn.execute('SELECT * FROM card_db'):
+        card_viewer.insert("", 'end', values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
+            
+
 # Card Labels
-label_card_mana = ttk.Label(window, text="Mana:").grid(row=0, column=0)
-label_card_title = ttk.Label(window, text="Title:").grid(row=1, column=0)
-label_card_type = ttk.Label(window, text="Type:").grid(row=2, column=0)
-label_card_subtype = ttk.Label(window, text="Subtype:").grid(row=3, column=0)
-label_card_effect = ttk.Label(window, text="Effect:").grid(row=4, column=0)
-label_card_attack = ttk.Label(window, text="Attack:").grid(row=5, column=0)
-label_card_affinity = ttk.Label(window, text="Affinity:").grid(row=6, column=0)
-label_card_health = ttk.Label(window, text="Health:").grid(row=7, column=0)
+label_card_mana = ttk.Label(tabOne, text="Mana:").grid(row=0, column=0)
+label_card_title = ttk.Label(tabOne, text="Title:").grid(row=1, column=0)
+label_card_type = ttk.Label(tabOne, text="Type:").grid(row=2, column=0)
+label_card_subtype = ttk.Label(tabOne, text="Subtype:").grid(row=3, column=0)
+label_card_effect = ttk.Label(tabOne, text="Effect:").grid(row=4, column=0)
+label_card_attack = ttk.Label(tabOne, text="Attack:").grid(row=5, column=0)
+label_card_affinity = ttk.Label(tabOne, text="Affinity:").grid(row=6, column=0)
+label_card_health = ttk.Label(tabOne, text="Health:").grid(row=7, column=0)
 
 # Input Fields
-entry_card_mana = ttk.Entry(window)
+entry_card_mana = ttk.Entry(tabOne)
 entry_card_mana.grid(row=0, column=1, padx=5, pady=5)
 
-entry_card_title = ttk.Entry(window)
+entry_card_title = ttk.Entry(tabOne)
 entry_card_title.grid(row=1, column=1, padx=5, pady=5)
 
-entry_card_type = ttk.Entry(window)
+entry_card_type = ttk.Entry(tabOne)
 entry_card_type.grid(row=2, column=1, padx=5, pady=5)
 
-entry_card_subtype = ttk.Entry(window)
+entry_card_subtype = ttk.Entry(tabOne)
 entry_card_subtype.grid(row=3, column=1, padx=5, pady=5)
 
-entry_card_effect = ttk.Entry(window)
+entry_card_effect = ttk.Entry(tabOne)
 entry_card_effect.grid(row=4, column=1, padx=5, pady=5)
 
-entry_card_attack = ttk.Entry(window)
+entry_card_attack = ttk.Entry(tabOne)
 entry_card_attack.grid(row=5, column=1, padx=5, pady=5)
 
-entry_card_affinity = ttk.Entry(window)
+entry_card_affinity = ttk.Entry(tabOne)
 entry_card_affinity.grid(row=6, column=1, padx=5, pady=5)
 
-entry_card_health = ttk.Entry(window)
+entry_card_health = ttk.Entry(tabOne)
 entry_card_health.grid(row=7, column=1, padx=5, pady=5)
 
-button_add_card = ttk.Button(window, text="Add Card", command=add_card).grid(row=8, columnspan=2)
+button_add_card = ttk.Button(tabOne, text="Add Card", command=add_card).grid(row=8, columnspan=2)
+button_update_card_viewer = ttk.Button(tabTwo, text="Reload Database", command=refresh_card_viewer).pack()
+
+card_viewer = ttk.Treeview(tabTwo)
+card_viewer["columns"] = ("1","2","3","4","5","6","7","8","9")
+
+#card_viewer.column("1", width=15, anchor='center')
+
+card_viewer.heading("1", text="Card ID")
+card_viewer.heading("2", text="Mana")
+card_viewer.heading("3", text="Title")
+card_viewer.heading("4", text="Type")
+card_viewer.heading("5", text="Subtype")
+card_viewer.heading("6", text="Effect")
+card_viewer.heading("7", text="Attack")
+card_viewer.heading("8", text="Affinity")
+card_viewer.heading("9", text="Health")
+card_viewer.pack()
 
 window.mainloop()
