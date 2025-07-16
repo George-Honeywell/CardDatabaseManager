@@ -84,28 +84,22 @@ button_add_card = ttk.Button(tabOne, text="Add Card", command=add_card).grid(row
 button_update_card_viewer = ttk.Button(tabTwo, text="Reload Database", command=refresh_card_viewer).pack()
 
 card_viewer = ttk.Treeview(tabTwo)
-card_viewer["columns"] = ("#0","#1","#2","#3","#4","#5","#6","#7","#8")
+card_viewer["columns"] = ("1","2","3","4","5","6","7","8")
 
-card_viewer.column('#0', width=1) # - Blank
-card_viewer.column('#1', width=50) # ID
-card_viewer.column('#2', width=50) # Mana
-card_viewer.column('#3', width=100) # Title
-card_viewer.column('#4', width=100) # Type
-card_viewer.column('#5', width=100) # Subtype
-card_viewer.column('#6', width=200) # Effect
-card_viewer.column('#7', width=50) # Attack
-card_viewer.column('#8', width=50) # Affinity
-card_viewer.column('#9', width=50) # Health
+card_viewer.column("#0", width=0, stretch=False)
+card_viewer.heading("#0", text='')
 
-card_viewer.heading("0", text="ID")
-card_viewer.heading("1", text="Mana")
-card_viewer.heading("2", text="Title")
-card_viewer.heading("3", text="Type")
-card_viewer.heading("4", text="Subtype")
-card_viewer.heading("5", text="Effect")
-card_viewer.heading("6", text="Attack")
-card_viewer.heading("7", text="Affinity")
-card_viewer.heading("8", text="Health")
+column_num = ('1', '2', '3', '4', '5', '6', '7', '8')
+column_width = (1, 50, 50, 100, 100, 100, 200, 50, 50, 50)
+
+for num, width in zip(column_num, column_width):
+    card_viewer.column(num, width=width)
+
+column_heading = ('ID', 'Mana', 'Title', 'Type', 'Subtype', 'Effect', 'Attack', 'Affinity', 'Health')
+
+for num, heading in zip(column_num, column_heading):
+    card_viewer.heading(num, text=heading)
+
 card_viewer.place(width=1200, height=250, y=30)
 
 window.mainloop()
