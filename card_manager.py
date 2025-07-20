@@ -28,17 +28,20 @@ tabControl.pack(expand=1, fill="both")
 card_id = 0
 def add_card():
     global card_id
-    conn.execute('INSERT INTO card_db VALUES (?,?,?,?,?,?,?,?,?)', 
-                 [card_id,
-                  entry_card_mana.get(),
-                  entry_card_title.get(),
-                  entry_card_type.get(),
-                  entry_card_subtype.get(),
-                  entry_card_effect.get(),
-                  entry_card_attack.get(),
-                  entry_card_affinity.get(),
-                  entry_card_health.get()])
-    card_id += 1
+    try:
+        conn.execute('INSERT INTO card_db VALUES (?,?,?,?,?,?,?,?,?)', 
+                    [card_id,
+                    entry_card_mana.get(),
+                    entry_card_title.get(),
+                    entry_card_type.get(),
+                    entry_card_subtype.get(),
+                    entry_card_effect.get(),
+                    entry_card_attack.get(),
+                    entry_card_affinity.get(),
+                    entry_card_health.get()])
+        card_id += 1
+    except sqlite3.IntegrityError as e:
+        messagebox.showerror("Integrity Error", f"{e}")
 
 def refresh_card_viewer():
     card_viewer.delete(*card_viewer.get_children())
